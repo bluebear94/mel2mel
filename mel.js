@@ -27,10 +27,9 @@ function touchNode(node) {
       var oldText = child.textContent;
       var separators = oldText.split(/mel/ig);
       var slen = separators.length;
-      var mymel = getMelNodeFor(child);
       for (var i = 0; i < slen - 1; ++i) {
         child.before(separators[i]);
-        child.before(mymel);
+        child.before(getMelNodeFor(child));
       }
       child.replaceWith(separators[slen - 1]);
     } else touchNode(child);
