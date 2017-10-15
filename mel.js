@@ -10,11 +10,12 @@ function getFontSizeOfParent(node) {
   return parseInt(s);
 }
 
-function getMelNodeFor(node) {
+function getMelNodeFor(node, s) {
   var size = getFontSizeOfParent(node);
   var mymel = mel.cloneNode(true);
   mymel.setAttribute("height", (size) + "px");
   mymel.setAttribute("width", (45.0 * size / 38.0) + "px");
+  mymel.setAttribute("alt", s);
   return mymel;
 }
 
@@ -26,10 +27,11 @@ function touchNode(node) {
     if (child.nodeType == Document.TEXT_NODE) {
       var oldText = child.textContent;
       var separators = oldText.split(/mel/ig);
+      var matches = oldText.match(/mel/ig);
       var slen = separators.length;
       for (var i = 0; i < slen - 1; ++i) {
         child.before(separators[i]);
-        child.before(getMelNodeFor(child));
+        child.before(getMelNodeFor(child, matches[i]));
       }
       child.replaceWith(separators[slen - 1]);
     } else touchNode(child);
